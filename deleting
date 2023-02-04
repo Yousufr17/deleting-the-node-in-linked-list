@@ -1,0 +1,53 @@
+#include<iostream>
+using namespace std;
+struct node{
+    int data;
+    struct node *next;
+};
+void del(struct node **head,int pos){
+    struct node *current=*head;
+    struct node *previous=*head;
+    if(*head==NULL)
+       cout<<"NOLIST";
+    else if(pos==1)
+    {
+        *head=current->next;
+        free(current);
+        current=NULL;
+    }
+    else
+   {
+        while(pos!=1)
+        {
+            previous=current;
+            current=current->next;
+            pos--;
+        }
+        previous->next=current->next;
+        free(current);
+    }
+}
+
+int main()
+{
+    struct node *head=(struct node *)malloc(sizeof(struct node));
+    struct node *node2=(struct node *)malloc(sizeof(struct node));
+    struct node *node3=(struct node *)malloc(sizeof(struct node));
+    head->data=10;
+    head->next=NULL;
+    node2->data=20;
+    node2->next=NULL;
+    head->next=node2;
+    node3->data=30;
+    node3->next=NULL;
+    node2->next=node3;
+    int postion=2;
+    del(&head,postion);
+    struct node *ptr=head;
+    while(ptr!=NULL)
+    {
+        cout<<ptr->data<<"->";
+        ptr=ptr->next;
+    }
+    cout<<"NULL";
+}
